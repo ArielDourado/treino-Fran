@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Treino da Fran</title>
+  <meta name="theme-color" content="#ec4899" />
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" href="./icons/icon-192.png" sizes="192x192">
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+  <style>
+  :root{
+    --bg1:#fff1f2; --bg2:#fdf2f8; --bg3:#faf5ff; --card:#ffffff; --border:#fce7f3;
+    --border-strong:#f9a8d4; --text:#4a044e; --muted:#6b7280; --accent:#ec4899;
+    --accent2:#a78bfa; --accent-soft:#fbcfe8; --success:#16a34a; --danger:#e11d48;
+  }
+  *{box-sizing:border-box}
+  body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial; margin:0; color:var(--text); background:linear-gradient(180deg,var(--bg1),var(--bg2) 50%,var(--bg3));}
+  .wrap{max-width:1000px; margin:32px auto; padding:0 16px}
+  header{display:flex; gap:16px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+  h1{font-size:clamp(22px,3vw,34px); margin:0; letter-spacing:0.2px}
+  .subtitle{color:var(--muted); font-size:14px}
+  .info{background:var(--card); border:1px solid var(--border); padding:10px 12px; border-radius:10px}
+  .tabs{display:flex; gap:8px; flex-wrap:wrap; margin:16px 0}
+  .tab-btn{border:1px solid var(--border); background:var(--card); color:var(--text); padding:10px 14px; border-radius:12px; cursor:pointer}
+  .tab-btn.active{border-color:var(--border-strong); box-shadow:0 0 0 2px var(--accent-soft) inset}
+  .search{margin:8px 0 16px; display:flex; gap:8px; align-items:center}
+  input[type="search"]{flex:1; padding:10px 12px; border-radius:12px; border:1px solid var(--border); background:var(--card); color:var(--text)}
+  .grid{display:grid; grid-template-columns:1fr; gap:12px}
+  @media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
+  details.card{background:var(--card); border:1px solid var(--border); border-radius:14px; overflow:hidden}
+  summary{list-style:none; cursor:pointer; padding:14px 16px; display:flex; align-items:center; gap:12px; font-weight:700}
+  summary .tag{font-size:12px; color:#fff; background:linear-gradient(90deg,var(--accent),var(--accent2)); padding:4px 10px; border-radius:999px}
+  summary .muted{color:var(--muted); font-weight:500}
+  summary::-webkit-details-marker{display:none}
+  .content{padding:0 16px 12px}
+  .exercise{display:grid; grid-template-columns:1fr; gap:8px; padding:12px; border-top:1px dashed var(--border-strong)}
+  .exercise h4{margin:0; font-size:16px}
+  .chosen{font-size:13px; color:var(--muted)}
+  .meta{display:flex; flex-wrap:wrap; gap:10px; color:var(--muted); font-size:13px}
+  .links{display:flex; gap:10px; flex-wrap:wrap}
+  .pill{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; font-size:12px; text-decoration:none; color:var(--text); background:var(--card); border:1px solid var(--border)}
+  .pill:hover{border-color:var(--border-strong)}
+  .controls{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+  label{font-size:12px; color:var(--muted)}
+  select, input[type="number"], input[type="text"]{padding:6px 8px; border-radius:8px; border:1px solid var(--border); background:var(--card); color:var(--text)}
+  input[type="checkbox"]{transform:scale(1.15)}
+  .row-actions{display:flex; gap:8px; justify-content:flex-end; padding:10px 16px; border-top:1px solid var(--border)}
+  .btn{cursor:pointer; padding:8px 12px; border-radius:10px; border:1px solid var(--border); background:var(--card); color:var(--text)}
+  .btn.save{border-color:#bbf7d0; background:#f0fdf4}
+  .btn.reset{border-color:#fecdd3; background:#fff1f2}
+  .small{font-size:12px; color:var(--muted)}
+  .notice{margin-top:8px; color:var(--muted); font-size:12px}
+  footer{margin:24px 0 32px; color:var(--muted); font-size:12px}
+  .hidden{display:none !important}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div>
+        <h1>Treino da Fran</h1>
+        <div class="subtitle">Clique em <b>Dia</b> ou <b>Tipo de treino</b>, escolha <b>alternativas</b> se precisar, marque como feito e salve — tudo fica no seu navegador.</div>
+      </div>
+      <div class="info small">Equipamentos: halteres (1–20 kg), esteira, bicicleta, barra W, barra longa (sem suporte), multiestação, banco.</div>
+    </header>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="por-dia">Por dia</button>
+      <button class="tab-btn" data-tab="por-tipo">Por tipo</button>
+    </div>
+
+    <div class="search">
+      <input id="search" type="search" placeholder="Filtrar exercício (ex.: agachamento, remada, tríceps)" />
+    </div>
+
+    <section id="por-dia" class="grid"></section>
+    <section id="por-tipo" class="grid hidden"></section>
+
+    <div class="notice">Os links abrem em nova aba. Vídeos: buscas no YouTube em português; Guias técnicos: ExRx (em inglês) quando disponível.</div>
+    <footer>
+      <div>Última atualização: 12/03/2026. Este plano considera os equipamentos informados e é genérico (não substitui orientação profissional).</div>
+    </footer>
+  </div>
+
+  <script type="module" src="./js/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
